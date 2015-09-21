@@ -1,5 +1,6 @@
 ## 0.2.1 - Fixed Wrong pane item
-* When opened tab is not TextEditor (e.g. About page) opening new file crashes
+* Fixed Issue #1: When opened tab is not TextEditor (e.g. About page)
+Zopening new file crashes
 
 ## 0.2.0 - Smooth Scroll
 * j, k, J, K, C-J, C-K, gg and G will now smoothly scroll

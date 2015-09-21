@@ -8,12 +8,12 @@ default, but it doesn't expose any interface so apart from CSS developers
 can't really change much. This package will try to replicate Vim's original
 NERD Tree functionality
 
-Current functionality
+## Current functionality
 * Most of the key VIM NERD Tree default key bindings are working
 * Completely replaces standard Tree View bindings
-* Smooth (NERD Tree like scroll)
+* Smooth (NERD Tree like scroll - still unstable)
 
-Planned/Not Available functionality
+## Planned/Not Available functionality
 * Bookmarks
 * Quick Help
 * NERD Tree menu
@@ -21,11 +21,22 @@ Planned/Not Available functionality
 * Expose API
 * Search and other vim-mode key bindings (zz, C-D, C-U, etc)
 
-Installation Notes:
-Please disable default Tree View bindings
-This is first, and very unstable version
+## Installation Notes
+* **This is first, and very unstable version**
+* Best to use in conjunction with [vim-mode](https://atom.io/packages/vim-mode)
+and [ex-mode](https://atom.io/packages/ex-mode)
+* Better to disable default Tree View bindings in Tree View package settings
 
-Default key bindings and events
+## Tips
+#### Use ZZ to close current tab/split
+Put [this extract](https://gist.github.com/sQu1rr/4621b24d1f13864e4e70) to your
+init.coffee and bind it to ZZ in your keymap.cson
+```cson
+'atom-text-editor.vim-mode:not(.insert-mode)':
+    'Z Z': 'sq:saveAndClose'
+```
+
+## Default key bindings and events
 
 Key | Event | Description
 --- | ----- | -----------
