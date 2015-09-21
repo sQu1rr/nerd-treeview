@@ -88,7 +88,7 @@ module.exports =
             return treeView.openSelectedEntry(activate)
 
         item = activePane.getActiveItem()
-        replace = item and !item.isModified()
+        replace = item and !item.isModified?()
 
         same = false
         for paneItem in activePane.getItems()
