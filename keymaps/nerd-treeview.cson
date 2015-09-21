@@ -49,8 +49,8 @@
     'H': 'tree-view:toggle-vcs-ignored-files'
     'F': 'nerd-treeview:toggle-files'
 
-    'j': 'core:move-down'
-    'k': 'core:move-up'
+    'k': 'nerd-treeview:jump-up'
+    'j': 'nerd-treeview:jump-down'
     'g g': 'core:move-to-top'
     'G': 'core:move-to-bottom'
 

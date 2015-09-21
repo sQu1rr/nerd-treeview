@@ -1,33 +1,67 @@
 $ = jQuery = require 'jquery'
 
+###
+ # Copyright 2012, Digital Fusion
+ # Licensed under the MIT license.
+ # http://teamdf.com/jquery-plugins/license/
+ #
+ # @author Sam Sehnert
+ # @desc A small plugin that checks whether elements are within
+ #		 the user visible viewport of a web browser.
+ #		 only accounts for vertical position, not horizontal.
+ # @source https://github.com/customd/jquery-visible
+###
+$.fn.visible = (partial) ->
+    $t = $(@)
+    $w = $(window)
+    viewTop = $w.scrollTop()
+    viewBottom = viewTop + $w.height()
+    _top = $t.offset().top
+    _bottom = _top + $t.height()
+    compareTop = if partial is true then _bottom else _top
+    compareBottom = if partial is true then _top else _bottom
+
+    return compareBottom <= viewBottom and compareTop >= viewTop
+
 module.exports =
     openCallbacks: []
 
     activate: ->
         atom.commands.add('.tree-view', {
             "nerd-treeview:open": => @open(true)
+
             'nerd-treeview:open-stay': => @open(false)
             'nerd-treeview:open-tab-stay': => @openTab(false)
+
             'nerd-treeview:add-tab': => @addTab(true)
             'nerd-treeview:add-tab-stay': => @addTab(false)
+
             'nerd-treeview:open-split-vertical-stay': => @splitVertical(false)
             'nerd-treeview:open-split-horizontal-stay': =>
                 @splitHorizontal(false)
+
             'nerd-treeview:close-parent': => @closeParent()
             'nerd-treeview:close-children': => @closeChildren()
+
             'nerd-treeview:open-tree': => @openTree(true)
             'nerd-treeview:open-tree-stay': => @openTree(false)
+
+            'nerd-treeview:jump-up': => @jumpUp()
+            'nerd-treeview:jump-down': => @jumpDown()
             'nerd-treeview:jump-root': => @jumpRoot()
             'nerd-treeview:jump-parent': => @jumpParent()
             'nerd-treeview:jump-first': => @jumpFirst()
             'nerd-treeview:jump-last': => @jumpLast()
             'nerd-treeview:jump-next': => @jumpNext()
             'nerd-treeview:jump-prev': => @jumpPrev()
+
             'nerd-treeview:change-root': => @changeRoot(false, false)
             'nerd-treeview:change-root-save-state': => @changeRoot(false, true)
             'nerd-treeview:up': => @changeRoot(true, false)
             'nerd-treeview:up-save-state': => @changeRoot(true, true)
+
             'nerd-treeview:toggle-files': => @toggleFiles()
+
             'nerd-treeview:remove': => @remove()
         })
 
@@ -128,25 +162,53 @@ module.exports =
 
         selected = treeView.selectedEntry()
         node = getNode(selected)[0]
-        treeView.selectEntry(node) if node
+        if node
+            treeView.selectEntry(node)
+            if not $(node).find('.name').eq(0).visible()
+                node.scrollIntoView(
+                    $(node).offset().top < $(selected).offset().top
+                )
+
+    jumpUp: ->
+        @jump (selected) ->
+            node = $(selected).prev(':visible')
+            if not node.size()
+                node = $(selected).parents('.directory:visible').eq(0)
+            else if node.is('.directory.expanded')
+                li = node.find('li:visible')
+                node = li.last() if li.size()
+            return node
+
+    jumpDown: ->
+        @jump (selected) ->
+            node = $(selected)
+            if node.is('.directory.expanded')
+                li = node.find('li:visible')
+                node = li.first() if li.size()
+            else
+                node = node.next(':visible')
+                if not node.size()
+                    node = $(selected).parents('.directory:visible').eq(0)
+                        .next(':visible')
+            return node
 
     jumpRoot: ->
-        @jump (selected) -> $(selected).parents('.project-root')
+        @jump (selected) -> $(selected).parents('.project-root:visible')
 
     jumpParent: ->
-        @jump (selected) -> $(selected).parents('.directory')
+        @jump (selected) -> $(selected).parents('.directory:visible')
 
     jumpFirst: ->
-        @jump (selected) -> $(selected).parent().children('li').first()
+        @jump (selected) -> $(selected).parent().children('li:visible').first()
 
     jumpLast: ->
-        @jump (selected) -> $(selected).parent().children('li').last()
+        @jump (selected) -> $(selected).parent().children('li:visible').last()
 
     jumpNext: ->
-        @jump (selected) -> $(selected).next()
+        @jump (selected) -> $(selected).next(':visible')
 
     jumpPrev: ->
-        @jump (selected) -> $(selected).prev()
+        @jump (selected) -> $(selected).prev(':visible')
 
     moveInArray: (array, i) ->
         array.splice(i, 0, array.splice(array.length - 1, 1)[0])

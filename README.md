@@ -11,6 +11,7 @@ NERD Tree functionality
 Current functionality
 * Most of the key VIM NERD Tree default key bindings are working
 * Completely replaces standard Tree View bindings
+* Smooth (NERD Tree like scroll)
 
 Planned/Not Available functionality
 * Bookmarks
@@ -19,7 +20,6 @@ Planned/Not Available functionality
 * cd/CD
 * Expose API
 * Search and other vim-mode key bindings (zz, C-D, C-U, etc)
-* Auto-Scroll when cursor jumps
 
 Installation Notes:
 Please disable default Tree View bindings
