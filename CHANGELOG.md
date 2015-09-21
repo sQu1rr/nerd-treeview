@@ -1,3 +1,9 @@
+## 0.3.0
+* To make it easy to disable specific mappings keymaps were separated into:
+ * tree-view: default Tree View **toggle and focus** mappings (C-\, A-\, etc)
+ * nerd-treeview: nerd treeview mappings
+ * vim-mode: nerd treeview navigation (j, k, gg, G, etc)
+
 ## 0.2.3
 * Code cleaning and readme/changelog updates
 * Added missing Vim mappings for navigation (top arrow, down arrow)

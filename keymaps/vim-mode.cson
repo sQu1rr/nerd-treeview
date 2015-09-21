@@ -1,0 +1,11 @@
+'.tree-view':
+    'k': 'nerd-treeview:jump-up'
+    'up': 'nerd-treeview:jump-up'
+
+    'j': 'nerd-treeview:jump-down'
+    'down': 'nerd-treeview:jump-down'
+
+    'g g': 'core:move-to-top'
+    'G': 'core:move-to-bottom'
+    
+    'Z Z': 'tree-view:toggle'
