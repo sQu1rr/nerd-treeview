@@ -92,7 +92,7 @@ module.exports =
 
         same = false
         for paneItem in activePane.getItems()
-            if (selected.getPath() == paneItem.getPath())
+            if (selected.getPath() == paneItem.getPath?())
                 same = true
                 break
 
