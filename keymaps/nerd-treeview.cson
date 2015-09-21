@@ -1,0 +1,65 @@
+'.platform-darwin':
+    'cmd-\\': 'tree-view:toggle'
+    'cmd-k cmd-b': 'tree-view:toggle'
+    'cmd-|': 'tree-view:reveal-active-file'
+    'ctrl-0': 'tree-view:toggle-focus'
+
+'.platform-win32, .platform-linux':
+    'ctrl-\\': 'tree-view:toggle'
+    'ctrl-k ctrl-b': 'tree-view:toggle'
+    'ctrl-|': 'tree-view:reveal-active-file'
+    'alt-\\': 'tree-view:toggle-focus'
+
+'.tree-view':
+    'Z Z': 'tree-view:toggle'
+    'q': 'tree-view:toggle'
+
+    'o': 'nerd-treeview:open'
+    'g o': 'nerd-treeview:open-stay'
+
+    't': 'tree-view:open-selected-entry'
+    'g t': 'nerd-treeview:open-tab-stay'
+    'T': 'nerd-treeview:add-tab'
+    'g T': 'nerd-treeview:add-tab-stay'
+
+    'i': 'tree-view:open-selected-entry-down'
+    'g i': 'nerd-treeview:open-split-vertical-stay'
+    's': 'tree-view:open-selected-entry-right'
+    'g s': 'nerd-treeview:open-split-horizontal-stay'
+
+    'O': 'tree-view:recursive-expand-directory'
+    'x': 'nerd-treeview:close-parent'
+    'X': 'nerd-treeview:close-children'
+    'e': 'nerd-treeview:open-tree'
+    'E': 'nerd-treeview:open-tree-stay'
+
+    'P': 'nerd-treeview:jump-root'
+    'p': 'nerd-treeview:jump-parent'
+    'K': 'nerd-treeview:jump-first'
+    'J': 'nerd-treeview:jump-last'
+    'ctrl-J': 'nerd-treeview:jump-next'
+    'ctrl-K': 'nerd-treeview:jump-prev'
+
+    'c': 'nerd-treeview:change-root'
+    'C': 'nerd-treeview:change-root-save-state'
+    'u': 'nerd-treeview:up'
+    'U': 'nerd-treeview:up-save-state'
+
+    'I': 'tree-view:toggle-ignored-names'
+    'H': 'tree-view:toggle-vcs-ignored-files'
+    'F': 'nerd-treeview:toggle-files'
+
+    'j': 'core:move-down'
+    'k': 'core:move-up'
+    'g g': 'core:move-to-top'
+    'G': 'core:move-to-bottom'
+
+    'a': 'tree-view:add-file'
+    'A': 'tree-view:add-folder'
+    'D': 'nerd-treeview:remove'
+    'Y': 'tree-view:copy-full-path'
+    'm m': 'tree-view:move'
+    'm p': 'tree-view:paste'
+    'y p': 'tree-view:duplicate'
+    'y y': 'tree-view:copy'
+    'd d': 'tree-view:cut'
