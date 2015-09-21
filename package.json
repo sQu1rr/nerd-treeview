@@ -1,22 +1,32 @@
 {
-  "name": "nerd-treeview",
-  "main": "./lib/nerd-treeview",
-  "version": "0.2.2",
-  "description": "Vim-like NERD Tree behaviour for Atom.io Tree View",
-  "keywords": [
-    "treeview",
-    "nerdtree",
-    "tree",
-    "nerd",
-    "vim",
-    "bindings"
-  ],
-  "repository": "https://github.com/sQu1rr/nerd-treeview",
-  "license": "MIT",
-  "engines": {
-    "atom": ">=1.0.0 <2.0.0"
-  },
-  "dependencies": {
-    "jquery": "^2.0.0"
-  }
+    "name": "nerd-treeview",
+    "main": "./lib/nerd-treeview",
+    "version": "0.2.2",
+    "coffeelintConfig": {
+        "indentation": {
+            "level": "error",
+            "value": 4
+        },
+        "line_endings": {
+            "value": "unix",
+            "level": "error"
+        }
+    },
+    "description": "Vim-like NERD Tree behaviour for Atom.io Tree View",
+    "keywords": [
+        "treeview",
+        "nerdtree",
+        "tree",
+        "nerd",
+        "vim",
+        "bindings"
+    ],
+    "repository": "https://github.com/sQu1rr/nerd-treeview",
+    "license": "MIT",
+    "engines": {
+        "atom": ">=1.0.0 <2.0.0"
+    },
+    "dependencies": {
+        "jquery": "^2.0.0"
+    }
 }

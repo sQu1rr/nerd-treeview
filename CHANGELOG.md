@@ -1,3 +1,10 @@
+## 0.2.3
+* Code cleaning and readme/changelog updates
+* Added missing Vim mappings for navigation (top arrow, down arrow)
+
+## 0.2.2 - Update for Readme
+* Cosmetic Readme updates
+
 ## 0.2.1 - Fixed Wrong pane item
 * Fixed Issue #1: When opened tab is not TextEditor (e.g. About page)
 Zopening new file crashes

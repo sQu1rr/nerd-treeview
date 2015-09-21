@@ -99,7 +99,7 @@ module.exports =
         if not (item and same)
             if replace
                 treeView.openSelectedEntry(activate)
-                @openCallbacks.push => activePane.destroyItem(item)
+                @openCallbacks.push -> activePane.destroyItem(item)
             else treeView.openSelectedEntryDown(activate)
         else treeView.openSelectedEntry(activate)
 
@@ -115,19 +115,19 @@ module.exports =
         item = activePane.getActiveItem()
         if item
             selected = treeView.selectedEntry()
-            @openCallbacks.push =>
+            @openCallbacks.push ->
                 activePane.activateItem(item)
                 treeView.selectEntry(selected)
 
     splitVertical: (activate) ->
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryDown(activate)
-        @openCallbacks.push => treeView.show()
+        @openCallbacks.push -> treeView.show()
 
     splitHorizontal: (activate) ->
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryRight(activate)
-        @openCallbacks.push => treeView.show()
+        @openCallbacks.push -> treeView.show()
 
     closeParent: ->
         return if not treeView = @getTreeView()
