@@ -1,7 +1,7 @@
 {
   "name": "nerd-treeview",
   "main": "./lib/nerd-treeview",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Vim-like NERD Tree behaviour for Atom.io Tree View",
   "keywords": [
     "treeview",
