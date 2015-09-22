@@ -14,6 +14,7 @@ NERD Tree functionality
 * Smooth scroll (NERD Tree like scroll - still unstable)
 
 ## Planned/Not Available functionality
+* Search
 * Bookmarks (Integrate with Core Bookmarks?)
 * NERD Tree menu (Subtree management)
 * cd/CD (through ex-mode extention)
@@ -42,7 +43,6 @@ C-\, D-\ (mac), C-k C-b, D-k D-b (mac) | nerd-treeview:toggle | toggle the tree 
 A-\, C-0 (mac) | nerd-treeview:toggle-focus | activate the tree (default)
 C-&#124;, D-&#124; (mac) | nerd-treeview:reveal-active-file | jump selection to the active file
 ZZ, q | nerd-treeview:toggle | hides tree View
-? | nerd-treeview:quick-help | shows quick help menu
 
 ### Open Files
 
@@ -134,7 +134,7 @@ z<CR>, zt | nerd-treeview:scroll-cursor-to-top | scroll current line to the top
 z., zz | nerd-treeview:scroll-cursor-to-middle | scroll current line to the middle
 z-, zb | nerd-treeview:scroll-cursor-to-bottom | scroll current line to the bottom
 
-### Search
+### Search **(not available yet)**
 
 Key | Event | Description
 --- | ----- | -----------

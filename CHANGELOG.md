@@ -6,8 +6,6 @@
 * Added missing Vim bindings (enter, +, -, etc)
 * Implemented number-prefixed jumps (5j, 6k, etc)
 * G can now jump to the line
-* Search and Reverse search added
-* Quick help added
 * Added functionality to copy selected file name (not full path)
 * Fixed issue when navigating down doesn't work for opened folders without files
 
