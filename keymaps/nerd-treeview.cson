@@ -2,6 +2,7 @@
     'q': 'tree-view:toggle'
 
     'o': 'nerd-treeview:open'
+    'enter': 'nerd-treeview:open'
     'g o': 'nerd-treeview:open-stay'
 
     't': 'tree-view:open-selected-entry'
@@ -40,6 +41,8 @@
     'A': 'tree-view:add-folder'
     'D': 'nerd-treeview:remove'
     'Y': 'tree-view:copy-full-path'
+    'y n': 'nerd-treeview:copy-name'
+    'y N': 'nerd-treeview:copy-name-ext'
     'm m': 'tree-view:move'
     'm p': 'tree-view:paste'
     'y p': 'tree-view:duplicate'

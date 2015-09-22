@@ -1,11 +1,48 @@
 '.tree-view':
     'k': 'nerd-treeview:jump-up'
     'up': 'nerd-treeview:jump-up'
+    '-': 'nerd-treeview:jump-up'
 
     'j': 'nerd-treeview:jump-down'
     'down': 'nerd-treeview:jump-down'
+    '+': 'nerd-treeview:jump-down'
 
     'g g': 'core:move-to-top'
-    'G': 'core:move-to-bottom'
-    
+    'G': 'nerd-treeview:jump-line'
+
     'Z Z': 'tree-view:toggle'
+
+    'ctrl-u': 'nerd-treeview:scroll-half-screen-up'
+    'ctrl-b': 'nerd-treeview:scroll-full-screen-up'
+    'ctrl-d': 'nerd-treeview:scroll-half-screen-down'
+    'ctrl-f': 'nerd-treeview:scroll-full-screen-down'
+    'ctrl-e': 'nerd-treeview:scroll-down'
+    'ctrl-y': 'nerd-treeview:scroll-up'
+
+    'z enter': 'nerd-treeview:scroll-cursor-to-top'
+    'z t': 'nerd-treeview:scroll-cursor-to-top'
+    'z .': 'nerd-treeview:scroll-cursor-to-middle'
+    'z z': 'nerd-treeview:scroll-cursor-to-middle'
+    'z -': 'nerd-treeview:scroll-cursor-to-bottom'
+    'z b': 'nerd-treeview:scroll-cursor-to-bottom'
+
+    'H': 'nerd-treeview:move-to-top-of-screen'
+    'L': 'nerd-treeview:move-to-bottom-of-screen'
+    'M': 'nerd-treeview:move-to-middle-of-screen'
+
+    '/': 'nerd-treeview:search'
+    '?': 'nerd-treeview:reverse-search'
+    'n': 'nerd-treeview:repeat-search'
+    'N': 'nerd-treeview:repeat-search-backwards'
+
+    '?': 'nerd-treeview:quick-help'
+
+    '1': 'nerd-treeview:repeat-prefix'
+    '2': 'nerd-treeview:repeat-prefix'
+    '3': 'nerd-treeview:repeat-prefix'
+    '4': 'nerd-treeview:repeat-prefix'
+    '5': 'nerd-treeview:repeat-prefix'
+    '6': 'nerd-treeview:repeat-prefix'
+    '7': 'nerd-treeview:repeat-prefix'
+    '8': 'nerd-treeview:repeat-prefix'
+    '9': 'nerd-treeview:repeat-prefix'
