@@ -29,11 +29,7 @@ and [ex-mode](https://atom.io/packages/ex-mode)
 
 ## Tips
 #### Use ZZ to save-and-close current tab/split
-See [this gist](https://gist.github.com/sQu1rr/4621b24d1f13864e4e70)
-
-Update your init.coffee and kaymap.cson files with the extracts in git
-* Close your windows/tabs/slits (only Text Editors) with Vim's ZZ
-* If the last window is closed, the focus transfers to the tree view
+See [vim-mode-zz](https://atom.io/packages/vim-mode-zz)
 
 ## Default key bindings and events
 
