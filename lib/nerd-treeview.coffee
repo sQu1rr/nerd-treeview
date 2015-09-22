@@ -1,27 +1,16 @@
 $ = jQuery = require 'jquery'
 
-###
- # Copyright 2012, Digital Fusion
- # Licensed under the MIT license.
- # http://teamdf.com/jquery-plugins/license/
- #
- # @author Sam Sehnert
- # @desc A small plugin that checks whether elements are within
- #		 the user visible viewport of a web browser.
- #		 only accounts for vertical position, not horizontal.
- # @source https://github.com/customd/jquery-visible
-###
-$.fn.visible = (partial) ->
-    $t = $(@)
-    $w = $(window)
-    viewTop = $w.scrollTop()
-    viewBottom = viewTop + $w.height()
-    _top = $t.offset().top
-    _bottom = _top + $t.height()
-    compareTop = if partial is true then _bottom else _top
-    compareBottom = if partial is true then _top else _bottom
+# influenced by https://github.com/customd/jquery-visible
+visible = ($e, $tree) ->
+    top = $e.offset().top
+    bottom = top + $e.height()
+    treeTop = $tree.offset().top
+    treeBottom = treeTop + $tree.height()
+    return top >= treeTop and bottom <= treeBottom
 
-    return compareBottom <= viewBottom and compareTop >= viewTop
+scrollIfInvisible = ($e, $tree) ->
+    if not visible($e, $tree)
+        $e[0]?.scrollIntoView($e.offset().top < $tree.offset().top)
 
 module.exports =
     openCallbacks: []
@@ -76,6 +65,10 @@ module.exports =
                 @scrollScreen(false, true)
             'nerd-treeview:scroll-full-screen-down': =>
                 @scrollScreen(true, true)
+
+            'nerd-treeview:scroll-cursor-to-top': => @cursor(true)
+            'nerd-treeview:scroll-cursor-to-middle': => @centreCursor()
+            'nerd-treeview:scroll-cursor-to-bottom': => @cursor(false)
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -177,11 +170,7 @@ module.exports =
         node = getNode(selected)[0]
         if node
             treeView.selectEntry(node)
-            $entry = $(node).find('.name').eq(0)
-            if not $entry.visible()
-                $entry[0]?.scrollIntoView(
-                    $(node).offset().top < $(selected).offset().top
-                )
+            scrollIfInvisible($(node).find('.name').eq(0), treeView)
 
     getNextEntry: (selected) ->
         node = $(selected)
@@ -305,12 +294,12 @@ module.exports =
 
         if down
             treeView.scrollDown()
-            while not $(selected).visible()
+            while not visible($(selected), treeView)
                 selected = @getNextEntry(selected)[0]
             treeView.selectEntry(selected)
         else
             treeView.scrollUp()
-            while not $(selected).visible()
+            while not visible($(selected), treeView)
                 selected = @getPrevEntry(selected)[0]
             treeView.selectEntry(selected)
 
@@ -323,10 +312,36 @@ module.exports =
         scrollY = parseInt((treeView.offset().top + treeView.height()) / D)
         curY = $selected.offset().top
 
-        treeView.scrollTop(if down then scrollY else -scrollY)
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + if down then scrollY else -scrollY)
 
         $element = $(document.elementFromPoint(centre, curY))
             .closest('li:visible')
         $element = treeView.find('li:visible').last() unless $element.size()
 
         treeView.selectEntry($element[0])
+        $entry = $element.find('.name').eq(0)
+        scrollIfInvisible($entry, treeView)
+
+    cursor: (up) ->
+        return if not treeView = @getTreeView()
+        $selected = $(treeView.selectedEntry()).find('.name').eq(0)
+
+        top = $selected.offset().top
+        treeTop = treeView.offset().top
+
+        target = if up then treeTop else treeTop + treeView.height()
+        source = if up then top else top + $selected.height()
+
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + source - target)
+
+    centreCursor: ->
+        return if not treeView = @getTreeView()
+        $selected = $(treeView.selectedEntry()).find('.name').eq(0)
+
+        middle = parseInt($selected.offset().top + $selected.height() / 2)
+        treeMiddle = parseInt(treeView.offset().top + treeView.height() / 2)
+
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + middle - treeMiddle)
