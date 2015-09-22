@@ -184,7 +184,7 @@ module.exports =
     jumpDown: ->
         @jump (selected) ->
             node = $(selected)
-            if node.is('.directory.expanded')
+            if node.is('.directory.expanded') and node.find('li:visible').size()
                 li = node.find('li:visible')
                 node = li.first() if li.size()
             else
