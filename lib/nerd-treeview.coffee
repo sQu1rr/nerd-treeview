@@ -69,6 +69,10 @@ module.exports =
             'nerd-treeview:scroll-cursor-to-top': => @cursor(true)
             'nerd-treeview:scroll-cursor-to-middle': => @centreCursor()
             'nerd-treeview:scroll-cursor-to-bottom': => @cursor(false)
+
+            'nerd-treeview:move-to-top-of-screen': => @move('top')
+            'nerd-treeview:move-to-middle-of-screen': => @move('middle')
+            'nerd-treeview:move-to-bottom-of-screen': => @move('bottom')
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -345,3 +349,23 @@ module.exports =
 
         curScroll = treeView.scrollTop()
         treeView.scrollTop(curScroll + middle - treeMiddle)
+
+    move: (where) ->
+        return if not treeView = @getTreeView()
+
+        centre = parseInt((treeView.offset().left + treeView.width()) / 2)
+        if where is 'top'
+            point = treeView.offset().top + 16
+        else if where is 'middle'
+            point = parseInt(treeView.offset().top + treeView.height() / 2)
+        else
+            point = treeView.height() - treeView.offset().top - 16
+
+        $e = $(document.elementFromPoint(centre, point))
+            .closest('li:visible')
+
+        if not $e.size()
+            $e = treeView.find('li:visible')
+            $e = if where is 'top' then $e.first() else $e.last()
+
+        treeView.selectEntry($e[0]) if $e.size()
