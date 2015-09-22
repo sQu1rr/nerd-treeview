@@ -9,6 +9,7 @@
 * Search and Reverse search added
 * Quick help added
 * Added functionality to copy selected file name (not full path)
+* Fixed issue when navigating down doesn't work for opened folders without files
 
 ## 0.2.3
 * Code cleaning and readme/changelog updates

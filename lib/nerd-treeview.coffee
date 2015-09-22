@@ -65,6 +65,9 @@ module.exports =
             'nerd-treeview:remove': => @remove()
             'nerd-treeview:copy-name': => @copyName(false)
             'nerd-treeview:copy-name-ext': => @copyName(true)
+
+            'nerd-treeview:scroll-up': => @scroll(false)
+            'nerd-treeview:scroll-down': => @scroll(true)
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -166,33 +169,38 @@ module.exports =
         node = getNode(selected)[0]
         if node
             treeView.selectEntry(node)
-            if not $(node).find('.name').eq(0).visible()
-                node.scrollIntoView(
+            $entry = $(node).find('.name').eq(0)
+            if not $entry.visible()
+                $entry[0]?.scrollIntoView(
                     $(node).offset().top < $(selected).offset().top
                 )
 
-    jumpUp: ->
-        @jump (selected) ->
-            node = $(selected).prev(':visible')
+    getNextEntry: (selected) ->
+        node = $(selected)
+        if node.is('.directory.expanded') and node.find('li:visible').size()
+            li = node.find('li:visible')
+            node = li.first() if li.size()
+        else
+            node = node.next(':visible')
             if not node.size()
                 node = $(selected).parents('.directory:visible').eq(0)
-            else if node.is('.directory.expanded')
-                li = node.find('li:visible')
-                node = li.last() if li.size()
-            return node
+                    .next(':visible')
+        return node
+
+    getPrevEntry: (selected) ->
+        node = $(selected).prev(':visible')
+        if not node.size()
+            node = $(selected).parents('.directory:visible').eq(0)
+        else if node.is('.directory.expanded')
+            li = node.find('li:visible')
+            node = li.last() if li.size()
+        return node
+
+    jumpUp: ->
+        @jump (selected) => @getPrevEntry(selected)
 
     jumpDown: ->
-        @jump (selected) ->
-            node = $(selected)
-            if node.is('.directory.expanded') and node.find('li:visible').size()
-                li = node.find('li:visible')
-                node = li.first() if li.size()
-            else
-                node = node.next(':visible')
-                if not node.size()
-                    node = $(selected).parents('.directory:visible').eq(0)
-                        .next(':visible')
-            return node
+        @jump (selected) => @getNextEntry(selected)
 
     jumpRoot: ->
         @jump (selected) -> $(selected).parents('.project-root:visible')
@@ -282,3 +290,19 @@ module.exports =
         name = $(selected).find('.name').first().data('name')
         name = name.replace(/\.[^\.]+$/, '') unless ext or /^\./.test(name)
         atom.clipboard.write(name)
+
+    scroll: (down) ->
+        return if not treeView = @getTreeView()
+
+        selected = treeView.selectedEntry()
+
+        if down
+            treeView.scrollDown()
+            while not $(selected).visible()
+                selected = @getNextEntry(selected)[0]
+            treeView.selectEntry(selected)
+        else
+            treeView.scrollUp()
+            while not $(selected).visible()
+                selected = @getPrevEntry(selected)[0]
+            treeView.selectEntry(selected)
