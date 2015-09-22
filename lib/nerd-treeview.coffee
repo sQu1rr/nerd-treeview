@@ -63,6 +63,8 @@ module.exports =
             'nerd-treeview:toggle-files': => @toggleFiles()
 
             'nerd-treeview:remove': => @remove()
+            'nerd-treeview:copy-name': => @copyName(false)
+            'nerd-treeview:copy-name-ext': => @copyName(true)
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -272,3 +274,11 @@ module.exports =
                 target: $(selected).find('.header .name')
             )
         else treeView.removeSelectedEntries()
+
+    copyName: (ext) ->
+        return if not treeView = @getTreeView()
+
+        selected = treeView.selectedEntry()
+        name = $(selected).find('.name').first().data('name')
+        name = name.replace(/\.[^\.]+$/, '') unless ext or /^\./.test(name)
+        atom.clipboard.write(name)
