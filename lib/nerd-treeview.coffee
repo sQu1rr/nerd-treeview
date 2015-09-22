@@ -68,6 +68,14 @@ module.exports =
 
             'nerd-treeview:scroll-up': => @scroll(false)
             'nerd-treeview:scroll-down': => @scroll(true)
+            'nerd-treeview:scroll-half-screen-up': =>
+                @scrollScreen(false, false)
+            'nerd-treeview:scroll-half-screen-down': =>
+                @scrollScreen(true, false)
+            'nerd-treeview:scroll-full-screen-up': =>
+                @scrollScreen(false, true)
+            'nerd-treeview:scroll-full-screen-down': =>
+                @scrollScreen(true, true)
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -293,7 +301,6 @@ module.exports =
 
     scroll: (down) ->
         return if not treeView = @getTreeView()
-
         selected = treeView.selectedEntry()
 
         if down
@@ -306,3 +313,20 @@ module.exports =
             while not $(selected).visible()
                 selected = @getPrevEntry(selected)[0]
             treeView.selectEntry(selected)
+
+    scrollScreen: (down, full) ->
+        return if not treeView = @getTreeView()
+        $selected = $(treeView.selectedEntry())
+
+        D = if full then 1 else 2
+        centre = parseInt((treeView.offset().left + treeView.width()) / 2)
+        scrollY = parseInt((treeView.offset().top + treeView.height()) / D)
+        curY = $selected.offset().top
+
+        treeView.scrollTop(if down then scrollY else -scrollY)
+
+        $element = $(document.elementFromPoint(centre, curY))
+            .closest('li:visible')
+        $element = treeView.find('li:visible').last() unless $element.size()
+
+        treeView.selectEntry($element[0])
