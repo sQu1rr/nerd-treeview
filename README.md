@@ -38,10 +38,10 @@ See [vim-mode-zz](https://atom.io/packages/vim-mode-zz)
 
 Key | Event | Description
 --- | ----- | -----------
-C-\, D-\ (mac), C-k C-b, D-k D-b (mac) | tree-view:toggle | toggle the tree (default)
-A-\, C-0 (mac) | tree-view:toggle-focus | activate the tree (default)
-C-&#124;, D-&#124; (mac) | tree-view:reveal-active-file | jump selection to the active file
-ZZ, q | tree-view:toggle | hides tree View
+C-\, D-\ (mac), C-k C-b, D-k D-b (mac) | nerd-treeview:toggle | toggle the tree (default)
+A-\, C-0 (mac) | nerd-treeview:toggle-focus | activate the tree (default)
+C-&#124;, D-&#124; (mac) | nerd-treeview:reveal-active-file | jump selection to the active file
+ZZ, q | nerd-treeview:toggle | hides tree View
 ? | nerd-treeview:quick-help | shows quick help menu
 
 ### Open Files
@@ -50,20 +50,20 @@ Key | Event | Description
 --- | ----- | -----------
 o, <CR> | nerd-treeview:open | open file or toggle folder
 go | nerd-treeview:open-stay | same as "o" but tree stays active
-t | tree-view:open-selected-entry | open selected file in a new tab
+t | nerd-treeview:open-tab | open selected file in a new tab
 gt | nerd-treeview:open-tab-stay | same as "t" but tree stays active
 T | nerd-treeview:add | same as "t" but current tab will stay active
 gT | nerd-treeview:add-tab-stay | same as "T" but tree stays active
-i | tree-view:open-selected-entry-down | split open file vertically downwards
+i | nerd-treeview:open-split-vertical | split open file vertically downwards
 gi | nerd-treeview:open-split-vertical-stay | same as "i" but tree stays active
-s | tree-view:open-selected-entry-right | split open file horizontally to the right
+s | nerd-treeview:open-split-horizontal | split open file horizontally to the right
 gs | nerd-treeview:open-split-horizontal-stay | same as "s" but tree stays active
 
 ### Interact with Folders
 
 Key | Event | Description
 --- | ----- | -----------
-O | tree-view:recursive-expand-directory | recursively expand directory
+O | nerd-treeview:expand | recursively expand directory
 x | nerd-treeview:close-parent | close parent directory
 X | nerd-treeview:close-children | close children directories recursively
 e | nerd-treeview:open-tree | add selected folder as a new project root
@@ -95,25 +95,25 @@ c | nerd-treeview:change-root | set selected directory as root
 C | nerd-treeview:change-root | set selected directory as root saving folder expansion state
 u | nerd-treeview:change-root | set root's parent directory as root
 U | nerd-treeview:change-root | set root's parent directory as root saving folder expansion state
-I | tree-view:toggle-ignored-names | toggle visibility of hidden files
-H | tree-view:toggle-vcs-ignored-files | toggle visibility of hidden VCS files
-F | tree-view:toggle-files | toggle visibility of files
+I | nerd-treeview:toggle-ignored-names | toggle visibility of hidden files
+H | nerd-treeview:toggle-vcs-ignored-files | toggle visibility of hidden VCS files
+F | nerd-treeview:toggle-files | toggle visibility of files
 
 ### Filesystem interaction
 
 Key | Event | Description
 --- | ----- | -----------
-Y | tree-view:copy-full-path | copy full path of the selected file
+Y | nerd-treeview:copy-full-path | copy full path of the selected file
 yn | nerd-treeview:copy-name | copy file name **without** extension
 yN | nerd-treeview:copy-name-ext | copy file name **with** extension
-a | tree-view:add-file | create new file
-A | tree-view:add-folder | create new folder
+a | nerd-treeview:add-file | create new file
+A | nerd-treeview:add-folder | create new folder
 D | nerd-treeview:remvoe | delete file or folder, or remove project root from workspace
-mm | tree-view:move | rename/move
-mp | tree-view:paste | paste
-yp | tree-view:duplicate | duplicate
-yy | tree-view:copy | copy
-dd | tree-view:cut | cut
+mm | nerd-treeview:move | rename/move
+mp | nerd-treeview:paste | paste
+yp | nerd-treeview:duplicate | duplicate
+yy | nerd-treeview:copy | copy
+dd | nerd-treeview:cut | cut
 
 ### Scroll
 

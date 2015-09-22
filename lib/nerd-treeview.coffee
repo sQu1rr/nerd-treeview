@@ -12,24 +12,38 @@ scrollIfInvisible = ($e, $tree) ->
     if not visible($e, $tree)
         $e[0]?.scrollIntoView($e.offset().top < $tree.offset().top)
 
+toggleConfig = (keyPath) ->
+    atom.config.set(keyPath, not atom.config.get(keyPath))
+
 module.exports =
     num: 0
 
     openCallbacks: []
 
     activate: ->
+        atom.commands.add('body', {
+            'nerd-treeview:toggle': => @delegate('toggle')
+            'nerd-treeview:reveal-active-file': =>
+                @delegate('revealActiveFile')
+            'nerd-treeview:toggle-focus': =>
+                @delegate('toggleFocus')
+        })
         atom.commands.add('.tree-view', {
-            "nerd-treeview:open": => @open(true)
-
+            'nerd-treeview:open': => @open(true)
             'nerd-treeview:open-stay': => @open(false)
+            'nerd-treeview:open-tab': => @openTab(true)
             'nerd-treeview:open-tab-stay': => @openTab(false)
 
             'nerd-treeview:add-tab': => @addTab(true)
             'nerd-treeview:add-tab-stay': => @addTab(false)
 
+            'nerd-treeview:open-split-vertical': => @splitVertical(true)
             'nerd-treeview:open-split-vertical-stay': => @splitVertical(false)
+            'nerd-treeview:open-split-horizontal': => @splitHorizontal(true)
             'nerd-treeview:open-split-horizontal-stay': =>
                 @splitHorizontal(false)
+
+            'nerd-treeview:expand': => @expand(true)
 
             'nerd-treeview:close-parent': => @closeParent()
             'nerd-treeview:close-children': => @closeChildren()
@@ -45,6 +59,7 @@ module.exports =
             'nerd-treeview:jump-last': => @jumpLast()
             'nerd-treeview:jump-next': => @jumpNext()
             'nerd-treeview:jump-prev': => @jumpPrev()
+            'nerd-treeview:jump-top': => @jumpLine(1)
             'nerd-treeview:jump-line': => @jumpLine()
 
             'nerd-treeview:change-root': => @changeRoot(false, false)
@@ -52,11 +67,25 @@ module.exports =
             'nerd-treeview:up': => @changeRoot(true, false)
             'nerd-treeview:up-save-state': => @changeRoot(true, true)
 
+            'nerd-treeview:toggle-ignored-names':
+                -> toggleConfig 'tree-view.hideIgnoredNames'
+            'nerd-treeview:toggle-vcs-ignored-files':
+                -> toggleConfig 'tree-view.hideVcsIgnoredFiles'
             'nerd-treeview:toggle-files': => @toggleFiles()
 
+            'nerd-treeview:add-file': => @delegate('add', true)
+            'nerd-treeview:add-folder': => @delegate('add')
+            'nerd-treeview:copy-full-path':
+                => @delegate('copySelectedEntryPath')
             'nerd-treeview:remove': => @remove()
             'nerd-treeview:copy-name': => @copyName(false)
             'nerd-treeview:copy-name-ext': => @copyName(true)
+
+            'nerd-treeview:move': => @delegate('moveSelectedEntry')
+            'nerd-treeview:paste': => @delegate('pasteEntries')
+            'nerd-treeview:duplicate': => @delegate('copySelectedEntry')
+            'nerd-treeview:copy': => @delegate('copySelectedEntries')
+            'nerd-treeview:cut': => @delegate('cutSelectedEntries')
 
             'nerd-treeview:scroll-up': => @scroll(false)
             'nerd-treeview:scroll-down': => @scroll(true)
@@ -78,6 +107,7 @@ module.exports =
             'nerd-treeview:move-to-bottom-of-screen': => @move('bottom')
 
             'nerd-treeview:repeat-prefix': (e) => @prefix(e)
+            'nerd-treeview:clear-prefix': => @clearPrefix()
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -96,6 +126,12 @@ module.exports =
 
     clearPrefix: ->
         @num = 0
+
+    delegate: (method, arg) ->
+        @clearPrefix()
+
+        return if not treeView = @getTreeView()
+        treeView[method](arg)
 
     open: (activate) ->
         @clearPrefix()
@@ -148,14 +184,20 @@ module.exports =
 
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryDown(activate)
-        @openCallbacks.push -> treeView.show()
+        @openCallbacks.push -> treeView.show() unless activate
 
     splitHorizontal: (activate) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryRight(activate)
-        @openCallbacks.push -> treeView.show()
+        @openCallbacks.push -> treeView.show() unless activate
+
+    expand: (recursive) ->
+        @clearPrefix()
+
+        return if not treeView = @getTreeView()
+        treeView.expandDirectory(recursive)
 
     closeParent: ->
         @clearPrefix()
@@ -262,12 +304,13 @@ module.exports =
             $(selected).prev(':visible')
         )
 
-    jumpLine: ->
+    jumpLine: (num) ->
         return if not treeView = @getTreeView()
         $elements = treeView.find('li:visible')
 
-        num = if @num then @num else $elements.size()
-        num = $elements.size() if num > $elements.size()
+        if not num
+            num = if @num then @num else $elements.size()
+            num = $elements.size() if num > $elements.size()
 
         $entry = $elements.eq(num - 1)
         treeView.selectEntry($entry[0])

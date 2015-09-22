@@ -1,11 +1,11 @@
 '.platform-darwin':
-    'cmd-\\': 'tree-view:toggle'
-    'cmd-k cmd-b': 'tree-view:toggle'
-    'cmd-|': 'tree-view:reveal-active-file'
-    'ctrl-0': 'tree-view:toggle-focus'
+    'cmd-\\': 'nerd-treeview:toggle'
+    'cmd-k cmd-b': 'nerd-treeview:toggle'
+    'cmd-|': 'nerd-treeview:reveal-active-file'
+    'ctrl-0': 'nerd-treeview:toggle-focus'
 
 '.platform-win32, .platform-linux':
-    'ctrl-\\': 'tree-view:toggle'
-    'ctrl-k ctrl-b': 'tree-view:toggle'
-    'ctrl-|': 'tree-view:reveal-active-file'
-    'alt-\\': 'tree-view:toggle-focus'
+    'ctrl-\\': 'nerd-treeview:toggle'
+    'ctrl-k ctrl-b': 'nerd-treeview:toggle'
+    'ctrl-|': 'nerd-treeview:reveal-active-file'
+    'alt-\\': 'nerd-treeview:toggle-focus'

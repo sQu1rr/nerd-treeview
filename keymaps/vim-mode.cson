@@ -7,10 +7,10 @@
     'down': 'nerd-treeview:jump-down'
     '+': 'nerd-treeview:jump-down'
 
-    'g g': 'core:move-to-top'
+    'g g': 'nerd-treeview:jump-top'
     'G': 'nerd-treeview:jump-line'
 
-    'Z Z': 'tree-view:toggle'
+    'Z Z': 'nerd-treeview:toggle'
 
     'ctrl-u': 'nerd-treeview:scroll-half-screen-up'
     'ctrl-b': 'nerd-treeview:scroll-full-screen-up'
@@ -47,3 +47,7 @@
     '8': 'nerd-treeview:repeat-prefix'
     '9': 'nerd-treeview:repeat-prefix'
     '0': 'nerd-treeview:repeat-prefix'
+
+    'escape': 'nerd-treeview:clear-prefix'
+    'ctrl-[': 'nerd-treeview:clear-prefix'
+    'ctrl-c': 'nerd-treeview:clear-prefix'
