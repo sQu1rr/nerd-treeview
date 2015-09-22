@@ -20,6 +20,7 @@ NERD Tree functionality
 * Try to use vim-mode functionality where/if possible
 * Expose API through service
 * Search highlight
+* Show line numbers on demand (both relative and absolute)
 
 ## Installation Notes
 * **This is first, and very unstable version**
@@ -72,19 +73,19 @@ E | nerd-treeview:open-tree-stay | same as "e" but cursor stays where it is
 
 Key | Event | Description | Can be prefixed
 --- | ----- | ----------- | ---------------
-j, +, down | nerd-treeview:jump-down | move cursor down | YES
-k, -, up | nerd-treeview:jump-up | move cursor up | YES
-K | nerd-treeview:jump-first | jump cursor to the first element in this folder | YES
-J | nerd-treeview:jump-last | jump cursor to the last element in this folder | YES
-C-J | nerd-treeview:jump-next | jump to the next sibling | YES
-C-K | nerd-treeview:jump-prev | jump to the previous sibling | YES
-gg | core:move-to-top | move to the top | **NO**
-G | nerd-treeview:jump-line | move to the bottom | YES
-P | nerd-treeview:jump-root | jump cursor to the current root folder | **NO**
-p | nerd-treeview:jump-parent | jump cursor to the parent folder | YES
-H | nerd-treeview:move-to-top-of-screen | Select top line | **NO**
-L | nerd-treeview:move-to-bottom-of-screen | Select bottom line | **NO**
-M | nerd-treeview:move-to-middle-of-screen | Select middle line | **NO**
+j, +, down | nerd-treeview:jump-down | move cursor down | **YES**
+k, -, up | nerd-treeview:jump-up | move cursor up | **YES**
+K | nerd-treeview:jump-first | jump cursor to the first element in this folder | NO
+J | nerd-treeview:jump-last | jump cursor to the last element in this folder | NO
+C-J | nerd-treeview:jump-next | jump to the next sibling | **YES**
+C-K | nerd-treeview:jump-prev | jump to the previous sibling | **YES**
+gg | core:move-to-top | move to the top | NO
+G | nerd-treeview:jump-line | move to the bottom | **YES**
+P | nerd-treeview:jump-root | jump cursor to the current root folder | NO
+p | nerd-treeview:jump-parent | jump cursor to the parent folder | **YES**
+H | nerd-treeview:move-to-top-of-screen | Select top line | NO
+L | nerd-treeview:move-to-bottom-of-screen | Select bottom line | NO
+M | nerd-treeview:move-to-middle-of-screen | Select middle line | NO
 
 ### Tree modification
 
@@ -139,5 +140,5 @@ Key | Event | Description
 --- | ----- | -----------
 / | nerd-treeview:search | search
 ? | nerd-treeview:reverse-search | reverse search
-n | nerd-treeview:repeat-search | go to the next match (can be prefixed)
-N | nerd-treeview:repeat-search-backwards | go to the previous match (can be prefixed)
+n | nerd-treeview:repeat-search | go to the next match **(can be prefixed)**
+N | nerd-treeview:repeat-search-backwards | go to the previous match **(can be prefixed)**

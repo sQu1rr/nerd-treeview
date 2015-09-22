@@ -13,6 +13,8 @@ scrollIfInvisible = ($e, $tree) ->
         $e[0]?.scrollIntoView($e.offset().top < $tree.offset().top)
 
 module.exports =
+    num: 0
+
     openCallbacks: []
 
     activate: ->
@@ -43,6 +45,7 @@ module.exports =
             'nerd-treeview:jump-last': => @jumpLast()
             'nerd-treeview:jump-next': => @jumpNext()
             'nerd-treeview:jump-prev': => @jumpPrev()
+            'nerd-treeview:jump-line': => @jumpLine()
 
             'nerd-treeview:change-root': => @changeRoot(false, false)
             'nerd-treeview:change-root-save-state': => @changeRoot(false, true)
@@ -73,6 +76,8 @@ module.exports =
             'nerd-treeview:move-to-top-of-screen': => @move('top')
             'nerd-treeview:move-to-middle-of-screen': => @move('middle')
             'nerd-treeview:move-to-bottom-of-screen': => @move('bottom')
+
+            'nerd-treeview:repeat-prefix': (e) => @prefix(e)
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -89,7 +94,12 @@ module.exports =
 
         return treeView
 
+    clearPrefix: ->
+        @num = 0
+
     open: (activate) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         activePane = atom.workspace.getActivePane()
 
@@ -114,10 +124,14 @@ module.exports =
         else treeView.openSelectedEntry(activate)
 
     openTab: (activate) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         treeView.openSelectedEntry(activate)
 
     addTab: (activate) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         treeView.openSelectedEntry(activate)
 
@@ -130,16 +144,22 @@ module.exports =
                 treeView.selectEntry(selected)
 
     splitVertical: (activate) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryDown(activate)
         @openCallbacks.push -> treeView.show()
 
     splitHorizontal: (activate) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryRight(activate)
         @openCallbacks.push -> treeView.show()
 
     closeParent: ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         selected = treeView.selectedEntry()
         directory = $(selected).parents('.directory')[0]
@@ -148,6 +168,8 @@ module.exports =
             treeView.selectEntry(directory)
 
     closeChildren: ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
 
         selected = treeView.selectedEntry()
@@ -155,6 +177,8 @@ module.exports =
         directory.collapse(true) for directory in directories
 
     openTree: (activate, path) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
 
         if not path
@@ -197,17 +221,30 @@ module.exports =
             node = li.last() if li.size()
         return node
 
+    repeatJump: (selected, getNode) ->
+        oldSelection = $('#non-existing-id')
+        for _ in [0..Math.max(@num - 1, 0)]
+            selected = getNode(selected)
+            break unless selected.size()
+            oldSelection = selected
+
+        @clearPrefix()
+        return oldSelection
+
     jumpUp: ->
-        @jump (selected) => @getPrevEntry(selected)
+        @jump (selected) => @repeatJump(selected, @getPrevEntry)
 
     jumpDown: ->
-        @jump (selected) => @getNextEntry(selected)
+        @jump (selected) => @repeatJump(selected, @getNextEntry)
 
     jumpRoot: ->
         @jump (selected) -> $(selected).parents('.project-root:visible')
 
     jumpParent: ->
-        @jump (selected) -> $(selected).parents('.directory:visible')
+        @jump (selected) =>
+            @repeatJump(selected, (selected) ->
+                $(selected).parents('.directory:visible')
+            )
 
     jumpFirst: ->
         @jump (selected) -> $(selected).parent().children('li:visible').first()
@@ -216,10 +253,27 @@ module.exports =
         @jump (selected) -> $(selected).parent().children('li:visible').last()
 
     jumpNext: ->
-        @jump (selected) -> $(selected).next(':visible')
+        @jump (selected) => @repeatJump(selected, (selected) ->
+            $(selected).next(':visible')
+        )
 
     jumpPrev: ->
-        @jump (selected) -> $(selected).prev(':visible')
+        @jump (selected) => @repeatJump(selected, (selected) ->
+            $(selected).prev(':visible')
+        )
+
+    jumpLine: ->
+        return if not treeView = @getTreeView()
+        $elements = treeView.find('li:visible')
+
+        num = if @num then @num else $elements.size()
+        num = $elements.size() if num > $elements.size()
+
+        $entry = $elements.eq(num - 1)
+        treeView.selectEntry($entry[0])
+        scrollIfInvisible($entry, treeView)
+
+        @clearPrefix()
 
     moveInArray: (array, i) ->
         array.splice(i, 0, array.splice(array.length - 1, 1)[0])
@@ -248,6 +302,8 @@ module.exports =
         treeView.selectEntry(selection)
 
     changeRoot: (up, state) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
 
         selected = treeView.selectedEntry()
@@ -271,10 +327,14 @@ module.exports =
         @fixState(treeView, up, root, selected, index) if state
 
     toggleFiles: ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         $(treeView).toggleClass('hide-files')
 
     remove: ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         selected = treeView.selectedEntry()
 
@@ -285,6 +345,8 @@ module.exports =
         else treeView.removeSelectedEntries()
 
     copyName: (ext) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
 
         selected = treeView.selectedEntry()
@@ -293,6 +355,8 @@ module.exports =
         atom.clipboard.write(name)
 
     scroll: (down) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         selected = treeView.selectedEntry()
 
@@ -308,6 +372,8 @@ module.exports =
             treeView.selectEntry(selected)
 
     scrollScreen: (down, full) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         $selected = $(treeView.selectedEntry())
 
@@ -328,6 +394,8 @@ module.exports =
         scrollIfInvisible($entry, treeView)
 
     cursor: (up) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         $selected = $(treeView.selectedEntry()).find('.name').eq(0)
 
@@ -341,6 +409,8 @@ module.exports =
         treeView.scrollTop(curScroll + source - target)
 
     centreCursor: ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
         $selected = $(treeView.selectedEntry()).find('.name').eq(0)
 
@@ -351,6 +421,8 @@ module.exports =
         treeView.scrollTop(curScroll + middle - treeMiddle)
 
     move: (where) ->
+        @clearPrefix()
+
         return if not treeView = @getTreeView()
 
         centre = parseInt((treeView.offset().left + treeView.width()) / 2)
@@ -369,3 +441,11 @@ module.exports =
             $e = if where is 'top' then $e.first() else $e.last()
 
         treeView.selectEntry($e[0]) if $e.size()
+
+    prefix: (e) ->
+        keyboardEvent = e.originalEvent?.originalEvent ? e.originalEvent
+        num = parseInt(atom.keymaps.keystrokeForKeyboardEvent(keyboardEvent))
+        @num = @num * 10 + num
+
+        # TODO: temp fix to prevent freeze, ideally each function should handle
+        @num = 9999 if @num > 9999
