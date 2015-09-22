@@ -248,10 +248,9 @@ module.exports =
             li = node.find('li:visible')
             node = li.first() if li.size()
         else
-            node = node.next(':visible')
-            if not node.size()
-                node = $(selected).parents('.directory:visible').eq(0)
-                    .next(':visible')
+            while node.size() and not node.next(':visible').size()
+                node = node.parents('.directory:visible').eq(0)
+            node = node.next(':visible') if node.size()
         return node
 
     getPrevEntry: (selected) ->

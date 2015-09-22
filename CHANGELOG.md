@@ -1,3 +1,7 @@
+## 0.3.1
+* Fixed going down (j) error when cursor stopped in case of (file in dir in dir
+case)
+
 ## 0.3.0
 * To simplify keymap management keymaps were separated into:
  * tree-view: default Tree View **toggle and focus** mappings (C-\, A-\, etc)
