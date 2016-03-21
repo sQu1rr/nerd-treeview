@@ -24,7 +24,10 @@ module.exports =
         atom.commands.add('body', {
             'nerd-treeview:toggle': =>
                 if not @delegate('toggle')
-                    atom.commands.dispatch(atom.views.getView(atom.workspace), 'tree-view:toggle')
+                    atom.commands.dispatch(
+                        atom.views.getView(atom.workspace),
+                        'tree-view:toggle'
+                    )
             'nerd-treeview:reveal-active-file': =>
                 @delegate('revealActiveFile')
             'nerd-treeview:toggle-focus': =>
