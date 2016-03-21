@@ -331,20 +331,17 @@ module.exports =
                 return i
         return null
 
-    fixState: (treeView, up, root, selected, index) ->
+    fixState: (treeView, up, root, selected, state, index) ->
         if up
-            (entries = {})[root.directory.name] = root.directory.expansionState
+            (entries = {})[root.directory.name] = state
             state =
                 isExpanded: true, entries: entries
             selection = $("span[data-path='#{selected.directory.path}]")
                 .closest('li')[0]
-            console.log(selected.directory)
         else
             selection = $('.project-root')[index]
-            state = selected.directory.expansionState
 
         (expansionState = {})[treeView.roots[index].getPath()] = state
-        console.log(selection, state, expansionState)
         treeView.updateRoots(expansionState)
         treeView.selectEntry(selection)
 
@@ -366,12 +363,14 @@ module.exports =
         path = rootDirectories[index].getParent().getPath() if up
         return if path == root.getPath()
 
-        if @openTree(false, path)
+        lastIndex = rootDirectories.length
+        ser = (if up then root else selected).directory
+            .serializeExpansionState()
+        if @openTree(false, path) and rootDirectories.length > lastIndex
+            @fixState(treeView, up, root, selected, ser, lastIndex) if state
             @moveInArray(atom.project.rootDirectories, index)
             @moveInArray(atom.project.repositories, index)
             atom.project.removePath(root.getPath())
-
-            @fixState(treeView, up, root, selected, index) if state
 
     toggleFiles: ->
         @clearPrefix()
