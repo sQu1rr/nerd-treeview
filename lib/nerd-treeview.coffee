@@ -233,6 +233,8 @@ module.exports =
 
             treeView.selectEntry($('.project-root').last()[0]) if activate
 
+            return true
+
     jump: (getNode) ->
         return if not treeView = @getTreeView()
 
@@ -357,16 +359,16 @@ module.exports =
         root = $selected.closest('.project-root')[0]
         index = @rootIndex(root.getPath(), rootDirectories)
 
-        path = false
+        path = selected?.getPath()
         path = rootDirectories[index].getParent().getPath() if up
         return if path == root.getPath()
 
-        @openTree(false, path)
-        @moveInArray(atom.project.rootDirectories, index)
-        @moveInArray(atom.project.repositories, index)
-        atom.project.removePath(root.getPath())
+        if @openTree(false, path)
+            @moveInArray(atom.project.rootDirectories, index)
+            @moveInArray(atom.project.repositories, index)
+            atom.project.removePath(root.getPath())
 
-        @fixState(treeView, up, root, selected, index) if state
+            @fixState(treeView, up, root, selected, index) if state
 
     toggleFiles: ->
         @clearPrefix()
