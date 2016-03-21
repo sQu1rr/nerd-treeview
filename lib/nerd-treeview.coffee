@@ -136,7 +136,7 @@ module.exports =
         treeView[method](arg)
         return true
 
-    open: (activate) ->
+    open: (activatePane) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
@@ -144,7 +144,7 @@ module.exports =
 
         selected = treeView.selectedEntry()
         if not $(selected).is('.file')
-            return treeView.openSelectedEntry(activate)
+            return treeView.openSelectedEntry({activatePane})
 
         item = activePane.getActiveItem()
         replace = item and !item.isModified?()
@@ -157,22 +157,22 @@ module.exports =
 
         if not (item and same)
             if replace
-                treeView.openSelectedEntry(activate)
+                treeView.openSelectedEntry({activatePane})
                 @openCallbacks.push -> activePane.destroyItem(item)
-            else treeView.openSelectedEntryDown(activate)
-        else treeView.openSelectedEntry(activate)
+            else treeView.openSelectedEntryDown({activatePane})
+        else treeView.openSelectedEntry({activatePane})
 
-    openTab: (activate) ->
+    openTab: (activatePane) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        treeView.openSelectedEntry(activate)
+        treeView.openSelectedEntry({activatePane})
 
-    addTab: (activate) ->
+    addTab: (activatePane) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        treeView.openSelectedEntry(activate)
+        treeView.openSelectedEntry({activatePane})
 
         activePane = atom.workspace.getActivePane()
         item = activePane.getActiveItem()
@@ -182,19 +182,19 @@ module.exports =
                 activePane.activateItem(item)
                 treeView.selectEntry(selected)
 
-    splitVertical: (activate) ->
+    splitVertical: (activatePane) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        treeView.openSelectedEntryDown(activate)
-        @openCallbacks.push -> treeView.show() unless activate
+        treeView.openSelectedEntryDown({activatePane})
+        @openCallbacks.push -> treeView.show() unless activatePane
 
-    splitHorizontal: (activate) ->
+    splitHorizontal: (activatePane) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        treeView.openSelectedEntryRight(activate)
-        @openCallbacks.push -> treeView.show() unless activate
+        treeView.openSelectedEntryRight({activatePane})
+        @openCallbacks.push -> treeView.show() unless activatePane
 
     expand: (recursive) ->
         @clearPrefix()

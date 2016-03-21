@@ -1,6 +1,10 @@
-## 0.3.2
+## 0.4.0
 * Changed Hide VSC ignored mapping from H to h to avoid conflicting with
   'move to the top of the screen mapping' (Thanks, dcalhoun)
+* Fixed -stay methods that retain focus on tree view
+  This tree-view commit broke it initially:
+  atom/tree-view@a2b9827fdcbb2aa798854ef50ce3e204723777e6
+* Fixed tree being unable to open (#6 and #3)
 
 ## 0.3.1
 * Fixed going down (j) error when cursor stopped in case of (file in dir in dir
