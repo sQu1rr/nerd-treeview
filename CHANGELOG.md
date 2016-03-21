@@ -1,3 +1,6 @@
+## 0.4.1
+* Fixed saving state while changing root which was broken
+
 ## 0.4.0
 * Changed Hide VSC ignored mapping from H to h to avoid conflicting with
   'move to the top of the screen mapping' (Thanks, dcalhoun)
