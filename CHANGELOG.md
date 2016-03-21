@@ -1,3 +1,7 @@
+## 0.3.2
+* Changed Hide VSC ignored mapping from H to h to avoid conflicting with
+  'move to the top of the screen mapping' (Thanks, dcalhoun)
+
 ## 0.3.1
 * Fixed going down (j) error when cursor stopped in case of (file in dir in dir
 case)

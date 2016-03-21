@@ -96,7 +96,7 @@ C | nerd-treeview:change-root | set selected directory as root saving folder exp
 u | nerd-treeview:change-root | set root's parent directory as root
 U | nerd-treeview:change-root | set root's parent directory as root saving folder expansion state
 I | nerd-treeview:toggle-ignored-names | toggle visibility of hidden files
-H | nerd-treeview:toggle-vcs-ignored-files | toggle visibility of hidden VCS files
+h | nerd-treeview:toggle-vcs-ignored-files | toggle visibility of hidden VCS files
 F | nerd-treeview:toggle-files | toggle visibility of files
 
 ### Filesystem interaction
