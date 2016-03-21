@@ -34,7 +34,7 @@
     'U': 'nerd-treeview:up-save-state'
 
     'I': 'nerd-treeview:toggle-ignored-names'
-    'H': 'nerd-treeview:toggle-vcs-ignored-files'
+    'h': 'nerd-treeview:toggle-vcs-ignored-files'
     'F': 'nerd-treeview:toggle-files'
 
     'a': 'nerd-treeview:add-file'
