@@ -1,3 +1,6 @@
+## 0.4.2
+* Fixed open-stay when no buffers are opened or when active buffer is not saved
+
 ## 0.4.1
 * Fixed saving state while changing root which was broken
 
