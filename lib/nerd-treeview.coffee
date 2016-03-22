@@ -162,7 +162,10 @@ module.exports =
             if replace
                 treeView.openSelectedEntry({activatePane})
                 @openCallbacks.push -> activePane.destroyItem(item)
-            else treeView.openSelectedEntryDown({activatePane})
+            else
+                treeView.openSelectedEntryDown()
+                if not activatePane
+                    @openCallbacks.push => @delegate('toggleFocus')
         else treeView.openSelectedEntry({activatePane})
 
     openTab: (activatePane) ->
