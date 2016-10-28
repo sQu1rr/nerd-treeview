@@ -35,8 +35,6 @@
     'n': 'nerd-treeview:repeat-search'
     'N': 'nerd-treeview:repeat-search-backwards'
 
-    '?': 'nerd-treeview:quick-help'
-
     '1': 'nerd-treeview:repeat-prefix'
     '2': 'nerd-treeview:repeat-prefix'
     '3': 'nerd-treeview:repeat-prefix'
