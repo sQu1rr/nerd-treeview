@@ -1,3 +1,6 @@
+## NEXT RELEASE
+* Fix by averrin for duplicate key '?' which is 'reverse search' not help
+
 ## 0.4.2
 * Fixed open-stay when no buffers are opened or when active buffer is not saved
 
