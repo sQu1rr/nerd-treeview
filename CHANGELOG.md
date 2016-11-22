@@ -1,4 +1,4 @@
-## NEXT RELEASE
+## 0.4.3
 * Fix by averrin for duplicate key '?' which is 'reverse search' not help
 
 ## 0.4.2
