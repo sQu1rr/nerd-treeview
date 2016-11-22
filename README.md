@@ -1,5 +1,7 @@
 # Nerd TreeView
 
+### Unfortunately, I switched back to NeoVim and I am not planning any improvements in the future
+
 The Nerd TreeView package will transform the native atom Tree View to somewhat
 similar to the famous NERD Tree Vim plugin - hence the name
 
