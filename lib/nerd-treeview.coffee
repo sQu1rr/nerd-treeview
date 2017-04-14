@@ -9,7 +9,7 @@ visible = ($e, $tree) ->
     return top >= treeTop and bottom <= treeBottom
 
 scrollIfInvisible = ($e, $tree) ->
-    if $tree !instanceof jQuery
+    if !($tree instanceof jQuery)
         if $tree.nodeType == 1
             $tree = $($tree)
         else if $tree.element.nodeType == 1
