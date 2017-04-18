@@ -1,3 +1,7 @@
+## 0.5.0
+* Fix by markovicdenis and jondot of jquery functions
+* Removed scroll up and down (ctrl e/y) because of malfunction
+
 ## 0.4.3
 * Fix by averrin for duplicate key '?' which is 'reverse search' not help
 
