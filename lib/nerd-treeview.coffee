@@ -100,6 +100,8 @@ module.exports =
             'nerd-treeview:copy': => @delegate('copySelectedEntries')
             'nerd-treeview:cut': => @delegate('cutSelectedEntries')
 
+            'nerd-treeview:scroll-up': => @scroll(false)
+            'nerd-treeview:scroll-down': => @scroll(true)
             'nerd-treeview:scroll-half-screen-up': =>
                 @scrollScreen(false, false)
             'nerd-treeview:scroll-half-screen-down': =>
@@ -413,6 +415,23 @@ module.exports =
         name = $(selected).find('.name').first().data('name')
         name = name.replace(/\.[^\.]+$/, '') unless ext or /^\./.test(name)
         atom.clipboard.write(name)
+
+    scroll: (down) ->
+        @clearPrefix()
+
+        return if not treeView = @getTreeView()
+        selected = treeView.selectedEntry()
+
+        if down
+            treeView.scrollDown()
+            while not visible($(selected), treeView)
+                selected = @getNextEntry(selected)[0]
+            treeView.selectEntry(selected)
+        else
+            treeView.scrollUp()
+            while not visible($(selected), treeView)
+                selected = @getPrevEntry(selected)[0]
+            treeView.selectEntry(selected)
 
     scrollScreen: (down, full) ->
         @clearPrefix()
