@@ -426,8 +426,8 @@ module.exports =
         scrollY = parseInt(($treeView.offset().top + $treeView.height()) / D)
         curY = $selected.offset().top
 
-        curScroll = $treeView.scrollTop()
-        $treeView.scrollTop(curScroll + if down then scrollY else -scrollY)
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + if down then scrollY else -scrollY)
 
         $element = $(document.elementFromPoint(centre, curY))
             .closest('li:visible')
@@ -450,8 +450,8 @@ module.exports =
         target = if up then treeTop else treeTop + $treeView.height()
         source = if up then top else top + $selected.height()
 
-        curScroll = $treeView.scrollTop()
-        $treeView.scrollTop(curScroll + source - target)
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + source - target)
 
     centreCursor: ->
         @clearPrefix()
@@ -463,8 +463,8 @@ module.exports =
         middle = parseInt($selected.offset().top + $selected.height() / 2)
         treeMiddle = parseInt($treeView.offset().top + $treeView.height() / 2)
 
-        curScroll = $treeView.scrollTop()
-        $treeView.scrollTop(curScroll + middle - treeMiddle)
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + middle - treeMiddle)
 
     move: (where) ->
         @clearPrefix()
