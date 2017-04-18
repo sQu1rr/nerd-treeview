@@ -27,9 +27,8 @@ NERD Tree functionality
 
 ## Installation Notes
 * **This is first, and very unstable version**
-* Best to use in conjunction with [vim-mode](https://atom.io/packages/vim-mode)
+* Best to use in conjunction with [vim-mode-plus](https://atom.io/packages/vim-mode-plus)
 and [ex-mode](https://atom.io/packages/ex-mode)
-* Better to disable default Tree View bindings in Tree View package settings
 
 ## Tips
 #### Use ZZ to save-and-close current tab/split
