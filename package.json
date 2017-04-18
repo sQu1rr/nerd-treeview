@@ -1,7 +1,7 @@
 {
   "name": "nerd-treeview",
   "main": "./lib/nerd-treeview",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "coffeelintConfig": {
     "indentation": {
       "level": "error",
