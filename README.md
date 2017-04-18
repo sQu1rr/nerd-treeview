@@ -29,6 +29,8 @@ NERD Tree functionality
 * **This is first, and very unstable version**
 * Best to use in conjunction with [vim-mode-plus](https://atom.io/packages/vim-mode-plus)
 and [ex-mode](https://atom.io/packages/ex-mode)
+* Repetated operations (e.g. 10j to jump up 10 times) require disabling native
+  tree view keybindings
 
 ## Tips
 #### Use ZZ to save-and-close current tab/split

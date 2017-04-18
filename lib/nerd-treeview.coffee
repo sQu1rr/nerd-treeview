@@ -421,21 +421,14 @@ module.exports =
         $treeView = wrapTreeView(treeView);
         $selected = $(treeView.selectedEntry())
 
+        treeHeight = $treeView.height();
+        elHeight = $treeView.find('li:visible:last').height();
+
         D = if full then 1 else 2
-        centre = parseInt(($treeView.offset().left + $treeView.width()) / 2)
-        scrollY = parseInt(($treeView.offset().top + $treeView.height()) / D)
-        curY = $selected.offset().top
+        @num = Math.floor(treeHeight / elHeight / D);
 
-        curScroll = treeView.scrollTop()
-        treeView.scrollTop(curScroll + if down then scrollY else -scrollY)
-
-        $element = $(document.elementFromPoint(centre, curY))
-            .closest('li:visible')
-        $element = $treeView.find('li:visible').last() unless $element.size()
-
-        treeView.selectEntry($element[0])
-        $entry = $element.find('.name').eq(0)
-        scrollIfInvisible($entry, $treeView)
+        if down then @jumpDown() else @jumpUp()
+        if not full then @centreCursor()
 
     cursor: (up) ->
         @clearPrefix()

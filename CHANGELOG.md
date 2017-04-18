@@ -1,3 +1,6 @@
+## 0.5.1
+* Better navigation - more vim like (ctrl + f/b/d/u)
+
 ## 0.5.0
 * Fix by markovicdenis and jondot of jquery functions
 * Removed scroll up and down (ctrl e/y) because of malfunction
