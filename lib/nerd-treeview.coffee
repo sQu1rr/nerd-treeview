@@ -9,16 +9,19 @@ visible = ($e, $tree) ->
     return top >= treeTop and bottom <= treeBottom
 
 scrollIfInvisible = ($e, $tree) ->
-    if !($tree instanceof jQuery)
-        if $tree.nodeType == 1
-            $tree = $($tree)
-        else if $tree.element.nodeType == 1
-            $tree = $($tree.element)
     if not visible($e, $tree)
         $e[0]?.scrollIntoView($e.offset().top < $tree.offset().top)
 
 toggleConfig = (keyPath) ->
     atom.config.set(keyPath, not atom.config.get(keyPath))
+
+wrapTreeView = (treeView) ->
+    if !(treeView instanceof jQuery)
+        if treeView.nodeType == 1
+            return $(treeView)
+        else if treeView.element.nodeType == 1
+            return $(treeView.element)
+    return treeView
 
 module.exports =
     num: 0
@@ -255,8 +258,9 @@ module.exports =
         selected = treeView.selectedEntry()
         node = getNode(selected)[0]
         if node
+            $treeView = wrapTreeView(treeView);
             treeView.selectEntry(node)
-            scrollIfInvisible($(node).find('.name').eq(0), treeView)
+            scrollIfInvisible($(node).find('.name').eq(0), $treeView)
 
     getNextEntry: (selected) ->
         node = $(selected)
@@ -321,7 +325,8 @@ module.exports =
 
     jumpLine: (num) ->
         return if not treeView = @getTreeView()
-        $elements = treeView.find('li:visible')
+        $treeView = wrapTreeView(treeView);
+        $elements = $treeView.find('li:visible')
 
         if not num
             num = if @num then @num else $elements.size()
@@ -329,7 +334,7 @@ module.exports =
 
         $entry = $elements.eq(num - 1)
         treeView.selectEntry($entry[0])
-        scrollIfInvisible($entry, treeView)
+        scrollIfInvisible($entry, $treeView)
 
         @clearPrefix()
 
@@ -387,7 +392,7 @@ module.exports =
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        $(treeView).toggleClass('hide-files')
+        wrapTreeView(treeView).toggleClass('hide-files')
 
     remove: ->
         @clearPrefix()
@@ -432,69 +437,73 @@ module.exports =
         @clearPrefix()
 
         return if not treeView = @getTreeView()
+        $treeView = wrapTreeView(treeView);
         $selected = $(treeView.selectedEntry())
 
         D = if full then 1 else 2
-        centre = parseInt((treeView.offset().left + treeView.width()) / 2)
-        scrollY = parseInt((treeView.offset().top + treeView.height()) / D)
+        centre = parseInt(($treeView.offset().left + $treeView.width()) / 2)
+        scrollY = parseInt(($treeView.offset().top + $treeView.height()) / D)
         curY = $selected.offset().top
 
-        curScroll = treeView.scrollTop()
-        treeView.scrollTop(curScroll + if down then scrollY else -scrollY)
+        curScroll = $treeView.scrollTop()
+        $treeView.scrollTop(curScroll + if down then scrollY else -scrollY)
 
         $element = $(document.elementFromPoint(centre, curY))
             .closest('li:visible')
-        $element = treeView.find('li:visible').last() unless $element.size()
+        $element = $treeView.find('li:visible').last() unless $element.size()
 
         treeView.selectEntry($element[0])
         $entry = $element.find('.name').eq(0)
-        scrollIfInvisible($entry, treeView)
+        scrollIfInvisible($entry, $treeView)
 
     cursor: (up) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
+        $treeView = wrapTreeView(treeView);
         $selected = $(treeView.selectedEntry()).find('.name').eq(0)
 
         top = $selected.offset().top
-        treeTop = treeView.offset().top
+        treeTop = $treeView.offset().top
 
-        target = if up then treeTop else treeTop + treeView.height()
+        target = if up then treeTop else treeTop + $treeView.height()
         source = if up then top else top + $selected.height()
 
-        curScroll = treeView.scrollTop()
-        treeView.scrollTop(curScroll + source - target)
+        curScroll = $treeView.scrollTop()
+        $treeView.scrollTop(curScroll + source - target)
 
     centreCursor: ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
+        $treeView = wrapTreeView(treeView);
         $selected = $(treeView.selectedEntry()).find('.name').eq(0)
 
         middle = parseInt($selected.offset().top + $selected.height() / 2)
-        treeMiddle = parseInt(treeView.offset().top + treeView.height() / 2)
+        treeMiddle = parseInt($treeView.offset().top + $treeView.height() / 2)
 
-        curScroll = treeView.scrollTop()
-        treeView.scrollTop(curScroll + middle - treeMiddle)
+        curScroll = $treeView.scrollTop()
+        $treeView.scrollTop(curScroll + middle - treeMiddle)
 
     move: (where) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
+        $treeView = wrapTreeView(treeView);
 
-        centre = parseInt((treeView.offset().left + treeView.width()) / 2)
+        centre = parseInt(($treeView.offset().left + $treeView.width()) / 2)
         if where is 'top'
-            point = treeView.offset().top + 16
+            point = $treeView.offset().top + 16
         else if where is 'middle'
-            point = parseInt(treeView.offset().top + treeView.height() / 2)
+            point = parseInt($treeView.offset().top + $treeView.height() / 2)
         else
-            point = treeView.height() - treeView.offset().top - 16
+            point = $treeView.height() - $treeView.offset().top - 16
 
         $e = $(document.elementFromPoint(centre, point))
             .closest('li:visible')
 
         if not $e.size()
-            $e = treeView.find('li:visible')
+            $e = $treeView.find('li:visible')
             $e = if where is 'top' then $e.first() else $e.last()
 
         treeView.selectEntry($e[0]) if $e.size()
