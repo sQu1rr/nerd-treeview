@@ -125,8 +125,6 @@ C-u | nerd-treeview:scroll-half-screen-up | Scroll half screen up
 C-b | nerd-treeview:scroll-full-screen-up | Scroll full screen up
 C-d | nerd-treeview:scroll-half-screen-down | Scroll half screen down
 C-f | nerd-treeview:scroll-full-screen-down | Scroll full screen down
-C-e | nerd-treeview:scroll-down | Scroll Down
-C-y | nerd-treeview:scroll-up | Scroll Up
 
 ### Zoom
 
