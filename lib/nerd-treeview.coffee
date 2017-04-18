@@ -420,18 +420,11 @@ module.exports =
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        selected = treeView.selectedEntry()
+        $treeView = wrapTreeView(treeView);
 
-        if down
-            treeView.scrollDown()
-            while not visible($(selected), treeView)
-                selected = @getNextEntry(selected)[0]
-            treeView.selectEntry(selected)
-        else
-            treeView.scrollUp()
-            while not visible($(selected), treeView)
-                selected = @getPrevEntry(selected)[0]
-            treeView.selectEntry(selected)
+        elHeight = $treeView.find('li:visible:last').height();
+        curScroll = treeView.scrollTop()
+        treeView.scrollTop(curScroll + elHeight * (if down then 1 else -1))
 
     scrollScreen: (down, full) ->
         @clearPrefix()
