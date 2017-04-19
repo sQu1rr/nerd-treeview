@@ -1,3 +1,6 @@
+## 0.5.2
+* Implemented simple search
+
 ## 0.5.1
 * Better navigation - more vim like (ctrl + f/b/d/u)
 * Scroll up and down (ctrl + e/y) are now fixed

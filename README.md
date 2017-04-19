@@ -14,9 +14,9 @@ NERD Tree functionality
 * Most of the key VIM NERD Tree default key bindings are working
 * Completely replaces standard Tree View bindings
 * Smooth scroll (NERD Tree like scroll - still unstable)
+* Search - accepts js regular expressions only, without slashes or flags
 
 ## Planned/Not Available functionality
-* Search
 * Bookmarks (Integrate with Core Bookmarks?)
 * NERD Tree menu (Subtree management)
 * cd/CD (through ex-mode extention)
@@ -137,7 +137,7 @@ z<CR>, zt | nerd-treeview:scroll-cursor-to-top | scroll current line to the top
 z., zz | nerd-treeview:scroll-cursor-to-middle | scroll current line to the middle
 z-, zb | nerd-treeview:scroll-cursor-to-bottom | scroll current line to the bottom
 
-### Search **(not available yet)**
+### Search
 
 Key | Event | Description
 --- | ----- | -----------
@@ -145,3 +145,4 @@ Key | Event | Description
 ? | nerd-treeview:reverse-search | reverse search
 n | nerd-treeview:repeat-search | go to the next match **(can be prefixed)**
 N | nerd-treeview:repeat-search-backwards | go to the previous match **(can be prefixed)**
+: | nerd-treeview:search-clear-highlight | clear match highlight

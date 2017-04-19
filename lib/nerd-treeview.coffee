@@ -1,4 +1,5 @@
 $ = jQuery = require 'jquery'
+SearchView = require './search-view'
 
 # influenced by https://github.com/customd/jquery-visible
 visible = ($e, $tree) ->
@@ -25,6 +26,8 @@ wrapTreeView = (treeView) ->
 
 module.exports =
     num: 0
+
+    regex: null
 
     openCallbacks: []
 
@@ -121,6 +124,12 @@ module.exports =
 
             'nerd-treeview:repeat-prefix': (e) => @prefix(e)
             'nerd-treeview:clear-prefix': => @clearPrefix()
+
+            'nerd-treeview:search': => @search(false)
+            'nerd-treeview:reverse-search': => @search(true)
+            'nerd-treeview:repeat-search': => @find(false)
+            'nerd-treeview:repeat-search-backwards': => @find(true)
+            'nerd-treeview:search-clear-highlight': => @noh()
         })
 
         atom.workspace.onDidOpen (e) =>
@@ -501,3 +510,67 @@ module.exports =
 
         # TODO: temp fix to prevent freeze, ideally each function should handle
         @num = 9999 if @num > 9999
+
+    search: (backwards) ->
+        @clearPrefix()
+
+        @view = new SearchView((regex) =>
+            @searchObj =
+                regex: regex,
+                backwards: backwards
+
+            setTimeout((=> @find()), 1) # to prevent try/catch
+        )
+        @view.attach()
+
+    find: (backwards) ->
+        if not @searchObj then return
+        return if not treeView = @getTreeView()
+        $treeView = wrapTreeView(treeView);
+
+        if @searchObj.backwards then backwards = not backwards
+
+        elements = $treeView.find('span.name').get()
+        if backwards then elements.reverse()
+
+        highlighted = treeView.selectedEntry()
+
+        if highlighted and elements.length
+            highlighted = $(highlighted).find('span.name')[0]
+            while elements[0] != highlighted
+                temp = elements.shift()
+                elements.push(temp)
+            temp = elements.shift()
+            elements.push(temp)
+
+        next = null
+        for element in elements
+            if element.innerText.match(@searchObj.regex)
+                next = element
+                if @num then @num -= 1
+                else break
+
+        $treeView.find('span.name span.match').parent().each(->
+            $(@).html($(@).text())
+        )
+
+        if next
+            replace = '<span class="match">$&</span>'
+            next.innerHTML = next.innerText.replace(@searchObj.regex, replace)
+
+            treeView.selectEntry($(next).parents('li')[0])
+            scrollIfInvisible($(next), $treeView)
+
+        @clearPrefix()
+
+    noh: () ->
+        @clearPrefix()
+
+        if not @searchObj then return
+
+        return if not treeView = @getTreeView()
+        $treeView = wrapTreeView(treeView);
+
+        $treeView.find('span.name span.match').parent().each(->
+            $(@).html($(@).text())
+        )

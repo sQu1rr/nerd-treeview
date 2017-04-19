@@ -1,3 +1,14 @@
+@import "syntax-variables";
+
 .hide-files .tree-view li.file {
     display: none;
+}
+
+@search-match-base: @syntax-result-marker-color;
+@search-match: hsla(hue(@search-match-base), saturation(@search-match-base), lightness(@search-match-base), 0.4);
+@search-match-border: hsla(hue(@search-match-base), saturation(@search-match-base), lightness(@search-match-base), 1.0);
+
+.tree-view:not(.noh) span.name span.match {
+    background-color: @search-match;
+    border: 1px solid @search-match-border;
 }

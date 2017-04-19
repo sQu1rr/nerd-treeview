@@ -48,3 +48,9 @@
     'y p': 'nerd-treeview:duplicate'
     'y y': 'nerd-treeview:copy'
     'd d': 'nerd-treeview:cut'
+
+    '/': 'nerd-treeview:search'
+    '?': 'nerd-treeview:reverse-search'
+    'n': 'nerd-treeview:repeat-search'
+    'N': 'nerd-treeview:repeat-search-backwards'
+    ':': 'nerd-treeview:search-clear-highlight'
