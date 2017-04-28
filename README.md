@@ -111,7 +111,7 @@ yn | nerd-treeview:copy-name | copy file name **without** extension
 yN | nerd-treeview:copy-name-ext | copy file name **with** extension
 a | nerd-treeview:add-file | create new file
 A | nerd-treeview:add-folder | create new folder
-D | nerd-treeview:remvoe | delete file or folder, or remove project root from workspace
+D | nerd-treeview:remove | delete file or folder, or remove project root from workspace
 mm | nerd-treeview:move | rename/move
 mp | nerd-treeview:paste | paste
 yp | nerd-treeview:duplicate | duplicate
