@@ -1,3 +1,7 @@
+## 0.5.3
+* Readme text adjustments (dcalhoun)
+* Fixed crash when trying to delete project root with D
+
 ## 0.5.2
 * Implemented simple search
 

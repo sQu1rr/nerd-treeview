@@ -13,7 +13,7 @@ NERD Tree functionality
 ## Current functionality
 * Most of the key VIM NERD Tree default key bindings are working
 * Completely replaces standard Tree View bindings
-* Smooth scroll (NERD Tree like scroll - still unstable)
+* Smooth scroll
 * Search - accepts js regular expressions only, without slashes or flags
 
 ## Planned/Not Available functionality
@@ -22,13 +22,12 @@ NERD Tree functionality
 * cd/CD (through ex-mode extention)
 * Try to use vim-mode functionality where/if possible
 * Expose API through service
-* Search highlight
 * Show line numbers on demand (both relative and absolute)
 
 ## Installation Notes
 * **This is first, and very unstable version**
 * Best to use in conjunction with [vim-mode-plus](https://atom.io/packages/vim-mode-plus)
-and [ex-mode](https://atom.io/packages/ex-mode)
+and [vim-mode-plus-ex-mode](https://atom.io/packages/vim-mode-plus-ex-mode)
 * Repetated operations (e.g. 10j to jump up 10 times) require disabling native
   tree view keybindings
 
