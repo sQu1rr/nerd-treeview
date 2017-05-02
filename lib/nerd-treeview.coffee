@@ -411,7 +411,7 @@ module.exports =
 
         if $(selected).is('.project-root')
             treeView.removeProjectFolder(
-                target: $(selected).find('.header .name')
+                target: $(selected).find('.header .name').get(0)
             )
         else treeView.removeSelectedEntries()
 
