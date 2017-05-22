@@ -1,3 +1,6 @@
+## 0.5.4
+* Added support for Atom 1.17.0 (thanks dcalhoun for the bug report)
+
 ## 0.5.3
 * Readme text adjustments (dcalhoun)
 * Fixed crash when trying to delete project root with D
