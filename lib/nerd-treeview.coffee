@@ -197,7 +197,7 @@ module.exports =
         return if not treeView = @getTreeView()
         treeView.openSelectedEntry({activatePane})
 
-        activePane = atom.workspace.getActivePane()
+        activePane = atom.workspace.getCenter().getActivePane()
         item = activePane.getActiveItem()
         if item
             selected = treeView.selectedEntry()
