@@ -166,8 +166,7 @@ module.exports =
         if not $(selected).is('.file')
             return treeView.openSelectedEntry({activatePane})
 
-        treeView.unfocus()
-        item = atom.workspace.getActivePaneItem()
+        item = atom.workspace.getCenter().getActivePaneItem()
         replace = item and !item.isModified?()
 
         same = false
