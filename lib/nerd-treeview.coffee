@@ -160,7 +160,7 @@ module.exports =
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        activePane = atom.workspace.getActivePane()
+        activePane = atom.workspace.getCenter().getActivePane()
 
         selected = treeView.selectedEntry()
         if not $(selected).is('.file')
