@@ -1,3 +1,6 @@
+## 0.5.5
+* Fixed stay commands that misbehaved (dcalhoun)
+
 ## 0.5.4
 * Added support for Atom 1.17.0 (thanks dcalhoun for the bug report)
 
