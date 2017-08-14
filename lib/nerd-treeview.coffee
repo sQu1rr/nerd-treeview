@@ -210,14 +210,14 @@ module.exports =
 
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryDown({activatePane})
-        @openCallbacks.push -> treeView.show() unless activatePane
+        @openCallbacks.push -> treeView.focus() unless activatePane
 
     splitHorizontal: (activatePane) ->
         @clearPrefix()
 
         return if not treeView = @getTreeView()
         treeView.openSelectedEntryRight({activatePane})
-        @openCallbacks.push -> treeView.show() unless activatePane
+        @openCallbacks.push -> treeView.focus() unless activatePane
 
     expand: (recursive) ->
         @clearPrefix()
