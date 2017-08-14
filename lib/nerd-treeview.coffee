@@ -160,14 +160,13 @@ module.exports =
         @clearPrefix()
 
         return if not treeView = @getTreeView()
-        activePane = atom.workspace.getActivePane()
+        activePane = atom.workspace.getCenter().getActivePane()
 
         selected = treeView.selectedEntry()
         if not $(selected).is('.file')
             return treeView.openSelectedEntry({activatePane})
 
-        treeView.unfocus()
-        item = atom.workspace.getActivePaneItem()
+        item = atom.workspace.getCenter().getActivePaneItem()
         replace = item and !item.isModified?()
 
         same = false
@@ -198,7 +197,7 @@ module.exports =
         return if not treeView = @getTreeView()
         treeView.openSelectedEntry({activatePane})
 
-        activePane = atom.workspace.getActivePane()
+        activePane = atom.workspace.getCenter().getActivePane()
         item = activePane.getActiveItem()
         if item
             selected = treeView.selectedEntry()
